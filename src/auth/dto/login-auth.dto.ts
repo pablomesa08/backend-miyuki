@@ -1,6 +1,6 @@
-import { IsEmail, IsPositive, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { IsString, IsEmail, MinLength, MaxLength, Matches } from "class-validator";
 
-export class CreateAuthDto {
+export class LoginAuthDto{
     @IsString()
     @IsEmail()
     @MinLength(4)
@@ -16,15 +16,4 @@ export class CreateAuthDto {
         }
     )
     readonly password: string;
-
-    @IsString()
-    @MinLength(5)
-    @MaxLength(150)
-    readonly address: string;
-
-    @IsString()
-    @IsPositive()
-    @MinLength(7)
-    @MaxLength(20)
-    readonly phone: string;
 }

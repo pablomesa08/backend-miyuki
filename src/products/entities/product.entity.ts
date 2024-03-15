@@ -6,7 +6,8 @@ export class Product {
     id: string;
 
     @Column({
-        unique: true
+        unique: true,
+        nullable: false
     })
     name: string;
     @BeforeInsert()
