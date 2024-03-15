@@ -15,35 +15,29 @@ export class Product {
     }
 
     @Column({
-        unique: true,
         nullable: false,
     })
     description: string;
 
     @Column({
-        unique: true,
         nullable: false,
         type: 'decimal',
     })
-    price: number;
+    price: string;
 
     @Column({
-        unique: true,
         nullable: false,
     })
     stock: number;
     
     @Column({
-        unique: true,
         nullable: false,
         type: 'decimal',
     })
-    mass: number;
+    mass: string;
 
     @Column({
-        unique: true,
         nullable: false,
-        type: 'date',
     })
-    date: Date;
+    date: string;
 }

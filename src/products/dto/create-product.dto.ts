@@ -1,4 +1,5 @@
-import { IsDate, IsDecimal, IsNumber, IsPositive, IsString, MaxLength, MinDate, MinLength } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsDate, IsDateString, IsDecimal, IsNumber, IsPositive, IsString, MaxLength, MinDate, MinLength } from "class-validator";
 
 export class CreateProductDto {
     @IsString()
@@ -11,21 +12,19 @@ export class CreateProductDto {
     @MaxLength(450)
     readonly description: string;
 
-    @IsNumber()
+    @IsString()
     @IsDecimal()
-    @IsPositive()
-    readonly price: number;
+    readonly price: string;
 
     @IsNumber()
     @IsPositive()
     readonly stock: number;
 
-    @IsNumber()
+    @IsString()
     @IsDecimal()
-    @IsPositive()
-    readonly mass: number;
+    readonly mass: string;
 
-    @IsDate()
-    @MinDate(new Date())
-    readonly date: Date;
+    @IsString()
+    @IsDateString()
+    readonly date: string;
 }

@@ -1,4 +1,4 @@
-import { IsString, MinLength, MaxLength, IsNumber, IsDecimal, IsPositive, IsDate, MinDate, IsOptional } from "class-validator";
+import { IsString, MinLength, MaxLength, IsNumber, IsDecimal, IsPositive, IsDate, MinDate, IsOptional, IsDateString } from "class-validator";
 
 export class UpdateProductDto {
     @IsString()
@@ -13,25 +13,23 @@ export class UpdateProductDto {
     @IsOptional()
     readonly description: string;
 
-    @IsNumber()
+    @IsString()
     @IsDecimal()
-    @IsPositive()
     @IsOptional()
-    readonly price: number;
+    readonly price: string;
 
     @IsNumber()
     @IsPositive()
     @IsOptional()
     readonly stock: number;
 
-    @IsNumber()
+    @IsString()
     @IsDecimal()
-    @IsPositive()
     @IsOptional()
-    readonly mass: number;
+    readonly mass: string;
 
-    @IsDate()
-    @MinDate(new Date())
+    @IsString()
+    @IsDateString()
     @IsOptional()
-    readonly date: Date;
+    readonly date: string;
 }
