@@ -1,4 +1,4 @@
-import { IsEmail, IsPositive, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsPhoneNumber, IsPositive, IsString, Matches, MaxLength, MinLength } from "class-validator";
 
 export class CreateAuthDto {
     @IsString()
@@ -23,7 +23,7 @@ export class CreateAuthDto {
     readonly address: string;
 
     @IsString()
-    @IsPositive()
+    @IsPhoneNumber()
     @MinLength(7)
     @MaxLength(20)
     readonly phone: string;

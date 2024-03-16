@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
 import { AuthModule } from './auth/auth.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
@@ -16,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
     password:process.env.DB_PASSWORD,
     autoLoadEntities:true,
     synchronize:true,
-  }), ProductsModule, AuthModule],
+  }), ProductsModule, AuthModule, CategoriesModule],
   controllers: [AppController],
   providers: [AppService],
 })
