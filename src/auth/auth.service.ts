@@ -44,18 +44,18 @@ export class AuthService {
       const user = await this.userRepository.findOneBy({email});
       
       if(!user){
-        throw new UnauthorizedException('User or password incorrect');
+        throw new UnauthorizedException(`User or password incorrect`);
       }
 
       const isValid=bcrypt.compareSync(password, user.password);
       
       if(!isValid){
-        throw new UnauthorizedException('User or password incorrect');
+        throw new UnauthorizedException(`User or password incorrect`);
       }
       const jwt = this.getJwtToken({email});
       return {email,jwt}
     } catch (error) {
-      throw new UnauthorizedException('User or password incorrect')
+      throw new UnauthorizedException(`User or password incorrect`);
     }
   }
 

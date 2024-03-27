@@ -1,5 +1,8 @@
-import { BeforeInsert, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "src/products/entities/product.entity";
+import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
+
+@Entity()
 export class Category {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -13,4 +16,8 @@ export class Category {
     checkName(){
         this.name = this.name.toLocaleLowerCase();
     }
+
+    @ManyToMany(() => Product)
+    @JoinTable()
+    product: Product[]
 }

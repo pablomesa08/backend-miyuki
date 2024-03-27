@@ -1,6 +1,6 @@
 import { User } from 'src/auth/entities/auth.entity';
 import { Product } from 'src/products/entities/product.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Cart {
@@ -14,11 +14,11 @@ export class Cart {
     )
     user: User;
 
-    @ManyToOne(
-        ()=>Product,
-        (product)=> product.carts,
+    @OneToMany(
+        () => Product, 
+        (product) => product.cart,
     )
-    product: Product;
+    product: Product[];
 
     @Column({
         nullable: false,

@@ -1,5 +1,5 @@
 import { Cart } from "src/cart/entities/cart.entity";
-import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Product {
@@ -43,9 +43,9 @@ export class Product {
     })
     date: string;
 
-    @OneToMany(
+    @ManyToOne(
         () => Cart, 
         (cart) => cart.product,
     )
-    carts: Cart[];
+    cart: Cart;
 }
