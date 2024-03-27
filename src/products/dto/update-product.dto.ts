@@ -1,4 +1,5 @@
 import { IsString, MinLength, MaxLength, IsNumber, IsDecimal, IsPositive, IsDate, MinDate, IsOptional, IsDateString } from "class-validator";
+import { Cart } from "src/cart/entities/cart.entity";
 
 export class UpdateProductDto {
     @IsString()
@@ -32,4 +33,6 @@ export class UpdateProductDto {
     @IsDateString()
     @IsOptional()
     readonly date: string;
+
+    readonly carts: Cart[];
 }

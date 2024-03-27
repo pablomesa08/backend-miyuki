@@ -1,5 +1,5 @@
-import { Transform } from "class-transformer";
-import { IsDate, IsDateString, IsDecimal, IsNumber, IsPositive, IsString, MaxLength, MinDate, MinLength } from "class-validator";
+import { IsArray, IsDateString, IsDecimal, IsNumber, IsPositive, IsString, MaxLength, MinDate, MinLength } from "class-validator";
+import { Cart } from "src/cart/entities/cart.entity";
 
 export class CreateProductDto {
     @IsString()
@@ -27,4 +27,6 @@ export class CreateProductDto {
     @IsString()
     @IsDateString()
     readonly date: string;
+
+    readonly carts: Cart[];
 }

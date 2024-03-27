@@ -24,7 +24,7 @@ import { JwtStrategy } from './strategy/jwt.strategy';
         }
       }
     }
-  })
+  }),
   ],
   exports:[TypeOrmModule,JwtStrategy,PassportModule,JwtModule],
 })

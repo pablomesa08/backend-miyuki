@@ -71,6 +71,5 @@ export class CategoriesService {
       throw new NotFoundException(`Category with id ${id} not found`);
     }
     await this.categoryRepository.remove(category);
-    
   }
 }
