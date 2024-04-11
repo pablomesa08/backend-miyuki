@@ -21,10 +21,10 @@ export class UpdateAuthDto {
     readonly password: string;
 
     @IsString()
-    @MinLength(5)
-    @MaxLength(150)
+    @MinLength(3)
+    @MaxLength(80)
     @IsOptional()
-    readonly address: string;
+    readonly name: string;
 
     @IsString()
     @IsPositive()

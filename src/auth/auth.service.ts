@@ -25,8 +25,8 @@ export class AuthService {
         ...createAuthDto, password: bcrypt.hashSync(createAuthDto.password,10)
       });
       await this.userRepository.save(user);
-      const {email, address, phone} = user;
-      return {email, address,phone};
+      const {email, name, phone} = user;
+      return {email, name, phone};
     } catch (e) {
       console.log(e)
       throw new BadRequestException(e.detail);
@@ -48,11 +48,12 @@ export class AuthService {
       }
 
       const isValid=bcrypt.compareSync(password, user.password);
+      const {name}=user;
       
       if(!isValid){
         throw new UnauthorizedException(`User or password incorrect`);
       }
-      const jwt = this.getJwtToken({email});
+      const jwt = this.getJwtToken({email, name});
       return {email,jwt}
     } catch (error) {
       throw new UnauthorizedException(`User or password incorrect`);

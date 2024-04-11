@@ -18,9 +18,9 @@ export class CreateAuthDto {
     readonly password: string;
 
     @IsString()
-    @MinLength(5)
-    @MaxLength(150)
-    readonly address: string;
+    @MinLength(3)
+    @MaxLength(80)
+    readonly name: string;
 
     @IsString()
     @IsPhoneNumber()

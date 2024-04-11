@@ -14,6 +14,6 @@ export class UseRoleGuardGuard implements CanActivate {
     for(const rol of user.roles ){
         if(validRoles.includes(rol)) return true;
     }
-    throw new UnauthorizedException('Forbiden for your role');
+    throw new UnauthorizedException('Forbidden for your role');
     }
 }

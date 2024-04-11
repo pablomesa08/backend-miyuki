@@ -25,21 +25,21 @@ export class User {
         }
     )
     password: string;
-    
+
     @Column(
         'text', {
             nullable: false
         }
     )
-    address: string;
+    name: string;
     @BeforeInsert()
-    checkAddress(){
-        this.address = this.address.toLocaleLowerCase();
+    checkName(){
+        this.name = this.name.toLocaleLowerCase();
     }
-
+    
     @Column(
         'text', {
-            nullable: false
+            nullable: true,
         }
     )
     phone: string;

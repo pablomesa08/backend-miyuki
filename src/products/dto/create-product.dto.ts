@@ -1,4 +1,4 @@
-import { IsArray, IsDateString, IsDecimal, IsNumber, IsPositive, IsString, MaxLength, MinDate, MinLength } from "class-validator";
+import { IsArray, IsBoolean, IsBooleanString, IsDateString, IsDecimal, IsNumber, IsPositive, IsString, MaxLength, MinDate, MinLength } from "class-validator";
 import { Cart } from "src/cart/entities/cart.entity";
 
 export class CreateProductDto {
@@ -8,25 +8,15 @@ export class CreateProductDto {
     readonly name: string;
 
     @IsString()
-    @MinLength(10)
-    @MaxLength(450)
-    readonly description: string;
-
-    @IsString()
     @IsDecimal()
-    readonly price: string;
-
-    @IsNumber()
-    @IsPositive()
-    readonly stock: number;
-
-    @IsString()
-    @IsDecimal()
-    readonly mass: string;
+    readonly baseprice: string;
 
     @IsString()
     @IsDateString()
-    readonly date: string;
+    readonly addeddate: string;
+
+    @IsBoolean()
+    readonly isAvailable: boolean;
 
     readonly carts: Cart[];
 }

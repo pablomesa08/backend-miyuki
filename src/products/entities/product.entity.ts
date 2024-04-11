@@ -18,30 +18,20 @@ export class Product {
 
     @Column({
         nullable: false,
-    })
-    description: string;
-
-    @Column({
-        nullable: false,
         type: 'decimal',
     })
-    price: string;
+    baseprice: string;
 
     @Column({
         nullable: false,
     })
-    stock: number;
-    
-    @Column({
-        nullable: false,
-        type: 'decimal',
-    })
-    mass: string;
+    addeddate: string;
 
     @Column({
         nullable: false,
+        type: 'boolean'
     })
-    date: string;
+    isAvailable: boolean;
 
     @ManyToOne(
         () => Cart, 
