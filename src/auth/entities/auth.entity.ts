@@ -1,5 +1,5 @@
-import { Cart } from 'src/cart/entities/cart.entity'
-import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "src/products/entities/product.entity";
+import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -55,9 +55,15 @@ export class User {
     })
     roles:string[];
 
-    @OneToMany(
-        () => Cart, 
-        (cart) => cart.user,
-    )
-    cart: Cart[];
+    @ManyToMany(() => Product, product => product.users)
+    @JoinTable({
+        name: 'users_products',
+        joinColumn: {
+            name: 'user_id'
+        },
+        inverseJoinColumn: {
+            name: 'product_id'
+        }
+    })
+    products: Product[];
 }

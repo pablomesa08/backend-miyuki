@@ -1,4 +1,5 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "src/products/entities/product.entity";
+import { BeforeInsert, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Format {
@@ -19,5 +20,8 @@ export class Format {
         type: 'decimal',
     })
     price: string;
+
+    @ManyToMany(() => Product, product => product.formats)
+    products: Product[];
 
 }

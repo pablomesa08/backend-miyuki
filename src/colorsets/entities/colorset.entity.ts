@@ -1,4 +1,5 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "src/products/entities/product.entity";
+import { BeforeInsert, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Colorset {
@@ -19,4 +20,7 @@ export class Colorset {
         type: 'array',
     })
     colors: string[];
+
+    @ManyToMany(() => Product, product => product.colorsets)
+    products: Product[];
 }

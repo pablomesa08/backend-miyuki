@@ -17,7 +17,6 @@ export class Category {
         this.name = this.name.toLocaleLowerCase();
     }
 
-    @ManyToMany(() => Product)
-    @JoinTable()
-    product: Product[]
+    @ManyToMany(() => Product, product => product.categories)
+    products: Product[];
 }
