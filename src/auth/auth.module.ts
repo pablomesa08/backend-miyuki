@@ -6,6 +6,8 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/auth.entity';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { Category } from 'src/categories/entities/category.entity';
+
 
 @Module({
   controllers: [AuthController],
@@ -20,11 +22,12 @@ import { JwtStrategy } from './strategy/jwt.strategy';
       return {
         secret:process.env.SECRET_PASSWORD,
         signOptions:{
-          expiresIn:'1h'
+          expiresIn:'168h'
         }
       }
     }
   }),
+  Category
   ],
   exports:[TypeOrmModule,JwtStrategy,PassportModule,JwtModule],
 })

@@ -1,6 +1,6 @@
 import { Format } from "src/formats/entities/format.entity";
 import { Category } from "src/categories/entities/category.entity";
-import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "src/auth/entities/auth.entity";
 import { Colorset } from "src/colorsets/entities/colorset.entity";
 

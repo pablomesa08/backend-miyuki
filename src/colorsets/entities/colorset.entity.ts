@@ -15,9 +15,9 @@ export class Colorset {
         this.name = this.name.toLocaleLowerCase();
     }
 
-    @Column({
+    @Column('text',{
+        array:true,
         nullable: false,
-        type: 'array',
     })
     colors: string[];
 
