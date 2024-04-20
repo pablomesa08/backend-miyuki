@@ -10,7 +10,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  @UseGuards(AuthGuard() ,UseRoleGuardGuard)
+  //@UseGuards(AuthGuard() ,UseRoleGuardGuard)
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }

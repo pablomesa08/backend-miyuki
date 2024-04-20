@@ -1,4 +1,4 @@
-import { IsEmail, IsPhoneNumber, IsPositive, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { IsArray, IsEmail, IsPhoneNumber, IsPositive, IsString, Matches, MaxLength, MinLength } from "class-validator";
 
 export class CreateAuthDto {
     @IsString()

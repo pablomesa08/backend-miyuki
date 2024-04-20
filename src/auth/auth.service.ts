@@ -4,10 +4,11 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/auth.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/Jwt.payload';
 import { LoginAuthDto } from './dto/login-auth.dto';
+import { Product } from 'src/products/entities/product.entity';
 
 @Injectable()
 export class AuthService {
@@ -16,16 +17,22 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
 
+    @InjectRepository(User)
+    private readonly productRepository: Repository<Product>,
+
     private readonly jwtService: JwtService
   ){}
 
   async create(createAuthDto: CreateAuthDto) {
     try {
+      //Creacion del usuario
       const user= this.userRepository.create({
         ...createAuthDto, password: bcrypt.hashSync(createAuthDto.password,10)
       });
+
+      //Guardado del usuario           
       await this.userRepository.save(user);
-      const {email, name, phone} = user;
+      const {email, name, phone}=user;
       return {email, name, phone};
     } catch (e) {
       console.log(e)

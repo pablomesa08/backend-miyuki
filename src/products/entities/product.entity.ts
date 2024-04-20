@@ -32,7 +32,7 @@ export class Product {
 
     @Column({
         nullable: false,
-        type: 'boolean'
+        type: 'boolean',
     })
     isAvailable: boolean;
 

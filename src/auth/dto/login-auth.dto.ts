@@ -1,4 +1,4 @@
-import { IsString, IsEmail, MinLength, MaxLength, Matches } from "class-validator";
+import { IsString, IsEmail, MinLength, MaxLength, Matches, IsArray } from "class-validator";
 
 export class LoginAuthDto{
     @IsString()
@@ -16,4 +16,8 @@ export class LoginAuthDto{
         }
     )
     readonly password: string;
+
+    @IsArray()
+    @IsString({each:true})
+    readonly productsIds: string[];
 }

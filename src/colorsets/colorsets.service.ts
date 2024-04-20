@@ -1,26 +1,75 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateColorsetDto } from './dto/create-colorset.dto';
 import { UpdateColorsetDto } from './dto/update-colorset.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Colorset } from './entities/colorset.entity';
 
 @Injectable()
 export class ColorsetsService {
-  create(createColorsetDto: CreateColorsetDto) {
-    return 'This action adds a new colorset';
+  constructor(
+    @InjectRepository(Colorset)
+    private colorsetRepository: Repository<Colorset>,
+  ){}
+
+  private handleExceptions(error: any){
+    if(error.code === 11000){
+      throw new BadRequestException(`ColorSet exists in DB ${JSON.stringify(error.keyvalue)}`);
+    }
+    console.log(error)
+    throw new InternalServerErrorException(`Can't create ColorSet- Please check server logs`);
   }
 
-  findAll() {
-    return `This action returns all colorsets`;
+  async create(createColorsetDto: CreateColorsetDto) {
+    try {
+
+      const colorset= this.colorsetRepository.create(createColorsetDto);
+      await this.colorsetRepository.save(colorset);
+      return colorset;
+
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} colorset`;
+  async findAll() {
+    const colorsets = await this.colorsetRepository.find({});
+    
+    if(!colorsets){
+      throw new NotFoundException(`No items found`);
+    }
+
+    return colorsets;
   }
 
-  update(id: number, updateColorsetDto: UpdateColorsetDto) {
-    return `This action updates a #${id} colorset`;
+  async findOne(id: string) {
+    const colorset = await this.colorsetRepository.findOneBy({id:id});
+    
+    if(!colorset){
+      throw new NotFoundException(`ColorSet with id ${id} not found`);
+    }
+
+    return colorset;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} colorset`;
+  async update(id: string, updateColorsetDto: UpdateColorsetDto) {
+    const colorset = await this.colorsetRepository.preload({id:id,
+      ...updateColorsetDto});
+
+    if(!colorset){
+      throw new NotFoundException(`ColorSet with id ${id} not found`);
+    }
+
+    await this.colorsetRepository.save(colorset);
+    return colorset;
+  }
+
+  async remove(id: string) {
+    const colorset = await this.colorsetRepository.findOneBy({id:id});
+    
+    if(!colorset){
+      throw new NotFoundException(`ColorSet with id ${id} not found`);
+    }
+    await this.colorsetRepository.remove(colorset);
   }
 }
