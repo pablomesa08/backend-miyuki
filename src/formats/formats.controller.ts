@@ -4,7 +4,10 @@ import { CreateFormatDto } from './dto/create-format.dto';
 import { UpdateFormatDto } from './dto/update-format.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UseRoleGuardGuard } from 'src/auth/guards/user-role-guard.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('Formats')
 @Controller('formats')
 export class FormatsController {
   constructor(private readonly formatsService: FormatsService) {}

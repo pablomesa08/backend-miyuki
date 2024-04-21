@@ -91,7 +91,7 @@ export class ProductsService {
   }
 
   async findAll() {
-    const products = await this.productRepository.find({});
+    const products = await this.productRepository.find({relations: ['categories', 'formats', 'colorsets']});
     
     if(!products){
       throw new NotFoundException(`No items found`);
@@ -101,7 +101,10 @@ export class ProductsService {
   }
 
   async findOne(id: string) {
-    const product = await this.productRepository.findOneBy({id:id});
+    const product = await this.productRepository.findOne({
+      where: {id: id},
+      relations: ['categories', 'formats', 'colorsets']
+    });
     
     if(!product){
       throw new NotFoundException(`Product with id ${id} not found`);
@@ -117,7 +120,7 @@ export class ProductsService {
     if(!product){
       throw new NotFoundException(`Product with id ${id} not found`);
     }
-
+    
     await this.productRepository.save(product);
     return product;
   }

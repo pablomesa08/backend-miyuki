@@ -4,7 +4,10 @@ import { CreateColorsetDto } from './dto/create-colorset.dto';
 import { UpdateColorsetDto } from './dto/update-colorset.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UseRoleGuardGuard } from 'src/auth/guards/user-role-guard.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('Colorsets')
 @Controller('colorsets')
 export class ColorsetsController {
   constructor(private readonly colorsetsService: ColorsetsService) {}

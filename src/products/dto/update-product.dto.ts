@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, MinLength, MaxLength, IsNumber, IsDecimal, IsPositive, IsDate, MinDate, IsOptional, IsDateString, IsBoolean } from "class-validator";
+import { IsString, MinLength, MaxLength, IsNumber, IsDecimal, IsPositive, IsDate, MinDate, IsOptional, IsDateString, IsBoolean, IsArray, ArrayMinSize } from "class-validator";
 import { Cart } from "src/cart/entities/cart.entity";
 
 export class UpdateProductDto {
@@ -27,5 +27,21 @@ export class UpdateProductDto {
     @IsOptional()
     readonly isAvailable: boolean;
 
-    readonly carts: Cart[];
+    @IsArray()
+    @IsString({each: true})
+    @ArrayMinSize(1)
+    @IsOptional()
+    readonly categoriesIds: string[];
+
+    @IsArray()
+    @IsOptional()
+    @IsString({each: true})
+    @ArrayMinSize(1)
+    readonly formatsIds: string[];
+
+    @IsArray()
+    @IsString({each: true})
+    @ArrayMinSize(1)
+    @IsOptional()
+    readonly colorsetsIds: string[];
 }
