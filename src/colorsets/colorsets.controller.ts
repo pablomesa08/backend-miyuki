@@ -4,7 +4,7 @@ import { CreateColorsetDto } from './dto/create-colorset.dto';
 import { UpdateColorsetDto } from './dto/update-colorset.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UseRoleGuardGuard } from 'src/auth/guards/user-role-guard.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 
 @ApiTags('Colorsets')
@@ -13,6 +13,7 @@ export class ColorsetsController {
   constructor(private readonly colorsetsService: ColorsetsService) {}
 
   @Post()
+  //@ApiBearerAuth('User JWT Authentication')
   //@UseGuards(AuthGuard() ,UseRoleGuardGuard)
   create(@Body() createColorsetDto: CreateColorsetDto) {
     return this.colorsetsService.create(createColorsetDto);
@@ -29,12 +30,14 @@ export class ColorsetsController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth('User JWT Authentication')
   @UseGuards(AuthGuard() ,UseRoleGuardGuard)
   update(@Param('id') id: string, @Body() updateColorsetDto: UpdateColorsetDto) {
     return this.colorsetsService.update(id, updateColorsetDto);
   }
 
   @Delete(':id')
+  @ApiBearerAuth('User JWT Authentication')
   @UseGuards(AuthGuard() ,UseRoleGuardGuard)
   remove(@Param('id') id: string) {
     return this.colorsetsService.remove(id);

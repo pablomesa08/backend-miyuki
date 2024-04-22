@@ -5,7 +5,7 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UseRoleGuardGuard } from './guards/user-role-guard.guard';
-import { ApiHeader, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -24,24 +24,28 @@ export class AuthController {
   }
 
   @Get()
+  @ApiBearerAuth('User JWT Authentication')
   @UseGuards(AuthGuard(), UseRoleGuardGuard)
   findAll() {
     return this.authService.findAll();
   }
 
   @Get(':id')
+  @ApiBearerAuth('User JWT Authentication')
   @UseGuards(AuthGuard(), UseRoleGuardGuard)
   findOne(@Param('id') id: string) {
     return this.authService.findOne(id);
   }
 
   @Patch(':id')
+  @ApiBearerAuth('User JWT Authentication')
   @UseGuards(AuthGuard(), UseRoleGuardGuard)
   update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
     return this.authService.update(id, updateAuthDto);
   }
 
   @Delete(':id')
+  @ApiBearerAuth('User JWT Authentication')
   @UseGuards(AuthGuard(), UseRoleGuardGuard)
   remove(@Param('id') id: string) {
     return this.authService.remove(id);

@@ -16,6 +16,11 @@ async function bootstrap() {
     .setDescription('The Miyuki Store API description')
     .setVersion('1.0')
     .addTag('miyuki-store')
+    .addBearerAuth({
+      type: 'http', scheme: 'bearer', bearerFormat: 'JWT'
+    },
+    'User JWT Authentication'
+  )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
