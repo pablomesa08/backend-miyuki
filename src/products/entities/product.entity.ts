@@ -14,6 +14,7 @@ export class Product {
         nullable: false
     })
     name: string;
+
     @BeforeInsert()
     checkName(){
         this.name = this.name.toLocaleLowerCase();
@@ -36,7 +37,7 @@ export class Product {
     })
     isAvailable: boolean;
 
-    @ManyToMany(() => Category, category => category.products)
+    @ManyToMany(() => Category, category => category.products, {cascade:['update']})
     @JoinTable(
         {
             name: 'products_categories',
@@ -76,8 +77,10 @@ export class Product {
             },
             inverseJoinColumn: {
                 name: 'colorset_id'
-            }
+            },
         }
     )
     colorsets: Colorset[];
+
+    
 }

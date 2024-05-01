@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/Jwt.payload';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { Product } from 'src/products/entities/product.entity';
+import { FavoritesAuthDto } from './dto/favorites-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,12 +18,21 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
 
-    @InjectRepository(User)
+    @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
 
     private readonly jwtService: JwtService
   ){}
 
+  private handleExceptions(error: any){
+    if(error.code === 11000){
+      throw new BadRequestException(`User exists in DB ${JSON.stringify(error.keyvalue)}`);
+    }
+    console.log(error)
+    throw new InternalServerErrorException(`Can't create User - Please check server logs`);
+  }
+
+  
   async create(createAuthDto: CreateAuthDto) {
     try {
       //Creacion del usuario
@@ -68,7 +78,7 @@ export class AuthService {
   }
 
   async findAll() {
-    const auths = await this.userRepository.find({});
+    const auths = await this.userRepository.find({relations:['products']});
 
     if (!auths){
       throw new NotFoundException(`No auths found`);
@@ -78,7 +88,11 @@ export class AuthService {
   }
 
   async findOne(id: string) {
-    const auth = await this.userRepository.findOneBy({id:id});
+    const auth = await this.userRepository.findOne({
+      where: {id: id},
+      relations: ['products']
+      }
+    );
 
     if(!auth){
       throw new NotFoundException(`Auth with id ${id} not found`);
@@ -108,4 +122,34 @@ export class AuthService {
     await this.userRepository.remove(auth);
   }
 
+
+  //Metodo para agregar productos al usuario
+  async addFavorites(id: string, favoritesAuthDto: FavoritesAuthDto) {
+    const user = await this.userRepository.findOneBy({id:id});
+
+    if(!user){
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    try {
+      const products = await Promise.all(
+        favoritesAuthDto.productsIds.map((id)=> this.productRepository.findOne(
+          {where: {id: id}}
+        ).then((product)=>{
+            console.log(product)
+            if(!product){
+              throw new BadRequestException(`Product with id ${id} not found`);
+            }
+            return product;
+          }
+          )
+        )
+      );
+      user.products = products;
+      await this.userRepository.save(user);
+      return user;
+    } catch (error) {
+      this.handleExceptions(error);
+    }
+  }
 }

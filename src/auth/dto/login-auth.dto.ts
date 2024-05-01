@@ -19,8 +19,4 @@ export class LoginAuthDto{
         }
     )
     readonly password: string;
-
-    @IsArray()
-    @IsString({each:true})
-    readonly productsIds: string[];
 }

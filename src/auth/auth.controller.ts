@@ -24,15 +24,15 @@ export class AuthController {
   }
 
   @Get()
-  @ApiBearerAuth('User JWT Authentication')
-  @UseGuards(AuthGuard(), UseRoleGuardGuard)
+  //@ApiBearerAuth('User JWT Authentication')
+  //@UseGuards(AuthGuard(), UseRoleGuardGuard)
   findAll() {
     return this.authService.findAll();
   }
 
   @Get(':id')
-  @ApiBearerAuth('User JWT Authentication')
-  @UseGuards(AuthGuard(), UseRoleGuardGuard)
+  //@ApiBearerAuth('User JWT Authentication')
+  //@UseGuards(AuthGuard(), UseRoleGuardGuard)
   findOne(@Param('id') id: string) {
     return this.authService.findOne(id);
   }
@@ -49,5 +49,10 @@ export class AuthController {
   @UseGuards(AuthGuard(), UseRoleGuardGuard)
   remove(@Param('id') id: string) {
     return this.authService.remove(id);
+  }
+
+  @Post('favorites/:id')
+  favorites(@Param('id') id: string, @Body() favoritesAuthDto){
+    return this.authService.addFavorites(id, favoritesAuthDto);
   }
 }

@@ -14,5 +14,6 @@ import { ColorsetsModule } from 'src/colorsets/colorsets.module';
   controllers: [ProductsController],
   providers: [ProductsService],
   imports: [TypeOrmModule.forFeature([Product]), AuthModule, CategoriesModule, FormatsModule, ColorsetsModule],
+  exports: [TypeOrmModule, ProductsService]
 })
 export class ProductsModule {}

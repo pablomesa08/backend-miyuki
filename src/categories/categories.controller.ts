@@ -31,7 +31,7 @@ export class CategoriesController {
 
   @Patch(':id')
   @ApiBearerAuth('User JWT Authentication')
-  @UseGuards(AuthGuard() ,UseRoleGuardGuard)
+  //@UseGuards(AuthGuard() ,UseRoleGuardGuard)
   update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return this.categoriesService.update(id, updateCategoryDto);
   }
