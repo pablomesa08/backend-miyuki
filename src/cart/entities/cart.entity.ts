@@ -1,6 +1,7 @@
-import { User } from 'src/auth/entities/auth.entity';
-import { Product } from 'src/products/entities/product.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/auth/entities/auth.entity";
+import { Format } from "src/formats/entities/format.entity";
+import { Product } from "src/products/entities/product.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -9,14 +10,17 @@ export class Cart {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
-    userId: string;
+    @OneToOne(()=> User)
+    @JoinColumn()
+    user: User;
 
-    @Column()
-    productId: string;
+    @OneToOne(()=> Product)
+    @JoinColumn()
+    product: Product;
 
-    @Column()
-    formatId: string;
+    @OneToOne(()=> Format)
+    @JoinColumn()
+    format: Format;
 
     @Column({
         nullable: false,

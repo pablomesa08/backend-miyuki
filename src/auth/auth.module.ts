@@ -29,6 +29,6 @@ import { ProductsModule } from 'src/products/products.module';
     }
   }),
   ],
-  exports:[TypeOrmModule,JwtStrategy,PassportModule,JwtModule],
+  exports:[TypeOrmModule,JwtStrategy,PassportModule,JwtModule, AuthService],
 })
 export class AuthModule {}
