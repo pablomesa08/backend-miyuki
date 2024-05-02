@@ -14,7 +14,12 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UseRoleGuardGuard } from './guards/user-role-guard.guard';
-import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiHeader,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { getUser } from './decorators/getuser.decorator';
 import { User } from './entities/auth.entity';
 
@@ -64,14 +69,15 @@ export class AuthController {
 
   @Post('favorites/:id')
   @ApiBearerAuth('User JWT Authentication')
+  @ApiOperation({ summary: 'Put a new favorite to a user' })
   @UseGuards(AuthGuard())
   favorites(@getUser() user: User, @Param('id') id: string) {
     return this.authService.addFavorites(id, user);
   }
 
-  // No funciona
-  @Get('favorites')
+  @Post('favorites')
   @ApiBearerAuth('User JWT Authentication')
+  @ApiOperation({ summary: 'Get favourites of the user' })
   @UseGuards(AuthGuard())
   getFavorites(@getUser() user: User) {
     return this.authService.getFavorites(user);
@@ -79,6 +85,7 @@ export class AuthController {
 
   @Delete('favorites/:id')
   @ApiBearerAuth('User JWT Authentication')
+  @ApiOperation({ summary: 'Delete favourite of user' })
   @UseGuards(AuthGuard())
   removeFavorites(@getUser() user: User, @Param('id') id: string) {
     return this.authService.removeFavorites(id, user);

@@ -170,9 +170,6 @@ export class AuthService {
   }
 
   async getFavorites(user: User) {
-    if (!user) {
-      return user;
-    }
     try {
       console.log('User', user);
 
