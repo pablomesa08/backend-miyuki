@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
@@ -6,6 +15,8 @@ import { LoginAuthDto } from './dto/login-auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UseRoleGuardGuard } from './guards/user-role-guard.guard';
 import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
+import { getUser } from './decorators/getuser.decorator';
+import { User } from './entities/auth.entity';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -19,7 +30,7 @@ export class AuthController {
 
   @Post('login')
   @UseGuards()
-  loginUser(@Body() loginAuthDto:LoginAuthDto){
+  loginUser(@Body() loginAuthDto: LoginAuthDto) {
     return this.authService.login(loginAuthDto);
   }
 
@@ -52,7 +63,24 @@ export class AuthController {
   }
 
   @Post('favorites/:id')
-  favorites(@Param('id') id: string, @Body() favoritesAuthDto){
-    return this.authService.addFavorites(id, favoritesAuthDto);
+  @ApiBearerAuth('User JWT Authentication')
+  @UseGuards(AuthGuard())
+  favorites(@getUser() user: User, @Param('id') id: string) {
+    return this.authService.addFavorites(id, user);
+  }
+
+  // No funciona
+  @Get('favorites')
+  @ApiBearerAuth('User JWT Authentication')
+  @UseGuards(AuthGuard())
+  getFavorites(@getUser() user: User) {
+    return this.authService.getFavorites(user);
+  }
+
+  @Delete('favorites/:id')
+  @ApiBearerAuth('User JWT Authentication')
+  @UseGuards(AuthGuard())
+  removeFavorites(@getUser() user: User, @Param('id') id: string) {
+    return this.authService.removeFavorites(id, user);
   }
 }
