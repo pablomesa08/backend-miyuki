@@ -184,7 +184,7 @@ export class AuthService {
         !favorites.products ||
         favorites.products.length === 0
       ) {
-        throw new NotFoundException(`Favorites not found`);
+        return [];
       }
 
       return favorites.products;
