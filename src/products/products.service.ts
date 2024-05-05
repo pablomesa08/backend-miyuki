@@ -134,4 +134,46 @@ export class ProductsService {
     await this.productRepository.remove(product);
     
   }
+
+  //Metodo para hallar productos por categorias usando QueryBuilder
+  async findByCategories(categoryIds: string[]){
+    const products = await this.productRepository.createQueryBuilder('product')
+    .leftJoinAndSelect('product.categories', 'category')
+    .where('category.id IN (:...categoryIds)', {categoryIds})
+    .getMany();
+
+    if(!products || products.length === 0){
+      throw new NotFoundException(`No items found`);
+    }
+
+    return products;
+  }
+
+  //Método para hallar productos por formatos usando QueryBuilder
+  async findByFormats(formatIds: string[]){
+    const products = await this.productRepository.createQueryBuilder('product')
+    .leftJoinAndSelect('product.formats', 'format')
+    .where('format.id IN (:...formatIds)', {formatIds})
+    .getMany();
+
+    if(!products || products.length === 0){
+      throw new NotFoundException(`No items found`);
+    }
+
+    return products;
+  }
+
+  //Método para hallar productos por colorsets usando QueryBuilder
+  async findByColorsets(colorsetIds: string[]){
+    const products = await this.productRepository.createQueryBuilder('product')
+    .leftJoinAndSelect('product.colorsets', 'colorset')
+    .where('colorset.id IN (:...colorsetIds)', {colorsetIds})
+    .getMany();
+
+    if(!products || products.length === 0){
+      throw new NotFoundException(`No items found`);
+    }
+
+    return products;
+  }
 }
