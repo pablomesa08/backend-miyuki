@@ -9,6 +9,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { CartModule } from './cart/cart.module';
 import { FormatsModule } from './formats/formats.module';
 import { ColorsetsModule } from './colorsets/colorsets.module';
+import { PromotionModule } from './promotion/promotion.module';
 
 @Module({
   imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
@@ -20,7 +21,7 @@ import { ColorsetsModule } from './colorsets/colorsets.module';
     password:process.env.DB_PASSWORD,
     autoLoadEntities:true,
     synchronize:true,
-  }), ProductsModule, AuthModule, CategoriesModule, CartModule, FormatsModule, ColorsetsModule],
+  }), ProductsModule, AuthModule, CategoriesModule, CartModule, FormatsModule, ColorsetsModule, PromotionModule],
   controllers: [AppController],
   providers: [AppService],
 })
