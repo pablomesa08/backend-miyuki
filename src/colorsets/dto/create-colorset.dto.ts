@@ -12,6 +12,6 @@ export class CreateColorsetDto {
     @IsString({ each: true })
     @IsArray()
     @ArrayMinSize(1)
-    @ArrayMaxSize(15)
+    @ArrayMaxSize(10)
     readonly colors: string[];
 }

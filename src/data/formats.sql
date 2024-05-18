@@ -1,0 +1,10 @@
+insert into formats (name, price) values ('Labrador Retriever', 79.5);
+insert into formats (name, price) values ('German Shepherd', 82.161);
+insert into formats (name, price) values ('Golden Retriever', 33.183);
+insert into formats (name, price) values ('French Bulldog', 96.633);
+insert into formats (name, price) values ('Poodle', 29.935);
+insert into formats (name, price) values ('Siberian Husky', 54.807);
+insert into formats (name, price) values ('Chihuahua', 45.884);
+insert into formats (name, price) values ('Bulldog', 70.808);
+insert into formats (name, price) values ('Beagle', 48.343);
+insert into formats (name, price) values ('Rottweiler', 54.262);

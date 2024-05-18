@@ -1,0 +1,6 @@
+[{"name":"Promoción de Verano","value":"25%","isAvailable":true},
+{"name":"Ofertas de Otoño","value":"60%","isAvailable":true},
+{"name":"Black Friday Madness","value":"25%","isAvailable":false},
+{"name":"Rebajas de Invierno","value":"75%","isAvailable":false},
+{"name":"Día del Cliente","value":"25%","isAvailable":true},
+{"name":"Promoción de Primavera","value":"25%","isAvailable":false}]

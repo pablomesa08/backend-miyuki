@@ -1,0 +1,12 @@
+insert into colorsets (name, colors) values ('Devil, tasmanian', ['#000000','#FF00FF','#FFFFFF','#00FFFF']);
+insert into colorsets (name, colors) values ('Porcupine, tree', ['#00FF00','#FFFFFF']);
+insert into colorsets (name, colors) values ('Green-winged macaw', ['#00FFFF','#FFFFFF','#0000FF','#FFA500','#00FF00','#000000','#FFFF00','#FF00FF','#FF0000']);
+insert into colorsets (name, colors) values ('Grey-footed squirrel', ['#FF00FF','#0000FF','#00FF00','#00FFFF','#000000','#FFFFFF']);
+insert into colorsets (name, colors) values ('Dolphin, common', ['#808080','#FFA500','#00FFFF','#FF00FF','#0000FF']);
+insert into colorsets (name, colors) values ('Snake, carpet', ['#000000','#00FFFF','#0000FF','#FFA500','#FF0000','#808080']);
+insert into colorsets (name, colors) values ('Frilled lizard', ['#808080','#FFA500','#FF0000','#00FF00','#FFFFFF']);
+insert into colorsets (name, colors) values ('Boa, malagasy ground', ['#0000FF','#FFA500','#808080','#00FFFF','#FFFFFF','#FF00FF','#FFFF00','#FF0000','#000000','#00FF00']);
+insert into colorsets (name, colors) values ('Mountain lion', ['#FFA500','#000000','#FF00FF','#808080','#FFFFFF','#FF0000','#0000FF','#00FF00','#00FFFF']);
+insert into colorsets (name, colors) values ('Macaw, red and blue', ['#FFFFFF','#FFA500','#00FFFF','#FFFF00','#808080','#FF00FF']);
+insert into colorsets (name, colors) values ('Ibis, sacred', ['#FFFFFF']);
+insert into colorsets (name, colors) values ('Tortoise, desert', ['#FFFF00','#FF00FF','#FF0000','#00FFFF','#0000FF']);

@@ -1,0 +1,10 @@
+insert into categories (name) values ('Carens');
+insert into categories (name) values ('Ridgeline');
+insert into categories (name) values ('Wrangler');
+insert into categories (name) values ('DeVille');
+insert into categories (name) values ('Q7');
+insert into categories (name) values ('Miata MX-5');
+insert into categories (name) values ('Expedition');
+insert into categories (name) values ('Prelude');
+insert into categories (name) values ('Rodeo');
+insert into categories (name) values ('Swift');
