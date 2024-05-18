@@ -14,11 +14,7 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UseRoleGuardGuard } from './guards/user-role-guard.guard';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { getUser } from './decorators/getuser.decorator';
 import { User } from './entities/auth.entity';
 
@@ -34,15 +30,27 @@ export class AuthController {
   }
 
   @Post('login')
-  @ApiOperation({ summary: 'Realizar login dentro de la página, se genera JWT token' })
+  @ApiOperation({
+    summary: 'Realizar login dentro de la página, se genera JWT token',
+  })
   loginUser(@Body() loginAuthDto: LoginAuthDto) {
     return this.authService.login(loginAuthDto);
   }
 
+  @Get('profile')
+  @ApiBearerAuth('User JWT Authentication')
+  @ApiOperation({ summary: 'Obtener información del usuario autenticado' })
+  @UseGuards(AuthGuard())
+  getProfile(@getUser() user: User) {
+    return user;
+  }
 
   @Get()
   @ApiBearerAuth('User JWT Authentication')
-  @ApiOperation({ summary: 'Obtener todos los usuarios que se hayan registrado. Requiere ser admin y estar autenticado' })
+  @ApiOperation({
+    summary:
+      'Obtener todos los usuarios que se hayan registrado. Requiere ser admin y estar autenticado',
+  })
   @UseGuards(AuthGuard(), UseRoleGuardGuard)
   findAll() {
     return this.authService.findAll();
@@ -50,7 +58,10 @@ export class AuthController {
 
   @Get(':id')
   @ApiBearerAuth('User JWT Authentication')
-  @ApiOperation({ summary: 'Obtener usuario por id específico. Requiere ser admin y estar autenticado' })
+  @ApiOperation({
+    summary:
+      'Obtener usuario por id específico. Requiere ser admin y estar autenticado',
+  })
   @UseGuards(AuthGuard(), UseRoleGuardGuard)
   findOne(@Param('id') id: string) {
     return this.authService.findOne(id);
@@ -58,7 +69,10 @@ export class AuthController {
 
   @Patch(':id')
   @ApiBearerAuth('User JWT Authentication')
-  @ApiOperation({ summary: 'Editar informacion de un registro. Requiere ser admin y estar autenticado' })
+  @ApiOperation({
+    summary:
+      'Editar informacion de un registro. Requiere ser admin y estar autenticado',
+  })
   @UseGuards(AuthGuard(), UseRoleGuardGuard)
   update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
     return this.authService.update(id, updateAuthDto);
@@ -66,7 +80,9 @@ export class AuthController {
 
   @Delete(':id')
   @ApiBearerAuth('User JWT Authentication')
-  @ApiOperation({ summary: 'Eliminar un usuario. Requiere ser admin y estar autenticado' })
+  @ApiOperation({
+    summary: 'Eliminar un usuario. Requiere ser admin y estar autenticado',
+  })
   @UseGuards(AuthGuard(), UseRoleGuardGuard)
   remove(@Param('id') id: string) {
     return this.authService.remove(id);
@@ -74,7 +90,10 @@ export class AuthController {
 
   @Post('favorites/:id')
   @ApiBearerAuth('User JWT Authentication')
-  @ApiOperation({ summary: 'Agregar un nuevo producto favorito al usuario. Debe estar autenticado, Id es el del producto' })
+  @ApiOperation({
+    summary:
+      'Agregar un nuevo producto favorito al usuario. Debe estar autenticado, Id es el del producto',
+  })
   @UseGuards(AuthGuard())
   favorites(@getUser() user: User, @Param('id') id: string) {
     return this.authService.addFavorites(id, user);
@@ -82,7 +101,10 @@ export class AuthController {
 
   @Post('favorites')
   @ApiBearerAuth('User JWT Authentication')
-  @ApiOperation({ summary: 'Obtener los productos favoritos del usuario. Debe estar autenticado' })
+  @ApiOperation({
+    summary:
+      'Obtener los productos favoritos del usuario. Debe estar autenticado',
+  })
   @UseGuards(AuthGuard())
   getFavorites(@getUser() user: User) {
     return this.authService.getFavorites(user);
@@ -90,7 +112,10 @@ export class AuthController {
 
   @Delete('favorites/:id')
   @ApiBearerAuth('User JWT Authentication')
-  @ApiOperation({ summary: 'Eliminar un producto de los favoritos del usuario por su Id. Debe estar autenticado' })
+  @ApiOperation({
+    summary:
+      'Eliminar un producto de los favoritos del usuario por su Id. Debe estar autenticado',
+  })
   @UseGuards(AuthGuard())
   removeFavorites(@getUser() user: User, @Param('id') id: string) {
     return this.authService.removeFavorites(id, user);
