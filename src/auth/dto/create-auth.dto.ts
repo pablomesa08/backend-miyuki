@@ -32,7 +32,6 @@ export class CreateAuthDto {
 
     @ApiProperty({description:'The phone number of the user'})
     @IsString()
-    @IsPhoneNumber()
     @MinLength(7)
     @MaxLength(20)
     readonly phone: string;
