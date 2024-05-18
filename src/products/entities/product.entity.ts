@@ -65,9 +65,6 @@ export class Product {
     )
     formats: Format[];
 
-    @ManyToMany(() => User, user => user.products)
-    users: User[];
-
     @ManyToMany(() => Colorset, colorset => colorset.products)
     @JoinTable(
         {
@@ -82,5 +79,4 @@ export class Product {
     )
     colorsets: Colorset[];
 
-    
 }

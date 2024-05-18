@@ -9,11 +9,10 @@ export class CreatePromotionDto {
     readonly name: string;
 
     @ApiProperty({description:'The value of the promotion'})
-    @IsNumber()
-    @IsPositive()
-    @Min(1)
-    @Max(100) 
-    readonly value: number;
+    @IsString()
+    @MinLength(2)
+    @MaxLength(4)
+    readonly value: string;
 
     @ApiProperty({description:'The availability of the promotion'})
     @IsBoolean()

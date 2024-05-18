@@ -15,7 +15,6 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/Jwt.payload';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { Product } from 'src/products/entities/product.entity';
-import { FavoritesAuthDto } from './dto/favorites-auth.dto';
 
 @Injectable()
 export class AuthService {

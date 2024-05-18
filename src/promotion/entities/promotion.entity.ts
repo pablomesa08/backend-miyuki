@@ -19,12 +19,11 @@ export class Promotion {
     @Column({
         nullable: false,
     })
-    value: number;
+    value: string;
 
     @Column({
         nullable: false,
         type: 'boolean',
-        default: true
     })
     isAvailable: boolean;
 }

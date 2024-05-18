@@ -113,18 +113,41 @@ export class ProductsService {
     return product;
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
-    const product = await this.productRepository.preload({id:id,
-      ...updateProductDto});
+    async update(id: string, updateProductDto: UpdateProductDto) {
+      const { categoriesIds, formatsIds, colorsetsIds, ...updateData } = updateProductDto;
 
-    if(!product){
-      throw new NotFoundException(`Product with id ${id} not found`);
-    }
-    
-    await this.productRepository.save(product);
-    return product;
+      // Preload the product with update data
+      const product = await this.productRepository.preload({ id, ...updateData });
+
+      if (!product) {
+          throw new NotFoundException(`Product with id ${id} not found`);
+      }
+
+      // Resolve categories
+      if (categoriesIds) {
+          product.categories = await this.categoryRepository.find({
+              where: categoriesIds.map(id => ({ id })),
+          });
+      }
+
+      // Resolve formats
+      if (formatsIds) {
+          product.formats = await this.formatRepository.find({
+              where: formatsIds.map(id => ({ id })),
+          });
+      }
+
+      // Resolve colorsets
+      if (colorsetsIds) {
+          product.colorsets = await this.colorsetRepository.find({
+              where: colorsetsIds.map(id => ({ id })),
+          });
+      }
+
+      await this.productRepository.save(product);
+      return product;
+      
   }
-
   async remove(id: string) {
     const product = await this.productRepository.findOneBy({id:id});
     

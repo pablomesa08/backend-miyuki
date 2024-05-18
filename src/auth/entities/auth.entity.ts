@@ -5,7 +5,6 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -54,15 +53,4 @@ export class User {
   })
   roles: string[];
 
-  @ManyToMany(() => Product, (product) => product.users)
-  @JoinTable({
-    name: 'users_products',
-    joinColumn: {
-      name: 'user_id',
-    },
-    inverseJoinColumn: {
-      name: 'product_id',
-    },
-  })
-  products: Product[];
 }
