@@ -7,6 +7,8 @@ import { Product } from './entities/product.entity';
 import { Category } from 'src/categories/entities/category.entity';
 import { Format } from 'src/formats/entities/format.entity';
 import { Colorset } from 'src/colorsets/entities/colorset.entity';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class ProductsService {
