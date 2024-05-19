@@ -160,11 +160,12 @@ export class CartService {
   }
 
   async remove(id: string) {
-    const cart = await this.cartRepository.findOneBy({ id: id });
+    const addedproduct = await this.cartRepository.findOneBy({ id: id });
 
-    if (!cart) {
-      throw new NotFoundException(`Cart with id ${id} not found`);
+    if (!addedproduct) {
+      throw new NotFoundException(`Added product with id ${id} not found`);
     }
-    await this.cartRepository.remove(cart);
+    await this.cartRepository.remove(addedproduct);
+    return(`Product successfully removed`)
   }
 }

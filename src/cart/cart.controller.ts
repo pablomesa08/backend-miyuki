@@ -59,6 +59,12 @@ export class CartController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth('User JWT Authentication')
+  @ApiOperation({
+    summary:
+      'Eliminar uno de los productos añadidos al carrito. Requiere estar autenticado',
+  })
+  @UseGuards(AuthGuard())
   remove(@Param('id') id: string) {
     return this.cartService.remove(id);
   }
