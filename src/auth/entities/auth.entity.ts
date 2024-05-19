@@ -1,3 +1,4 @@
+import { Cart } from 'src/cart/entities/cart.entity';
 import { Product } from 'src/products/entities/product.entity';
 import {
   BeforeInsert,
@@ -5,6 +6,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -64,4 +66,21 @@ export class User {
     },
   })
   products: Product[];
+
+  // is optional
+  // is the username of the user
+  @Column('text', {
+    nullable: true,
+  })
+  username: string;
+
+  // is optional
+  // is the address of the user
+  @Column('text', {
+    nullable: true,
+  })
+  address: string;
+
+  @OneToMany(() => Cart, (cart) => cart.user)
+  carts: Cart[];
 }
