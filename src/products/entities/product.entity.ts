@@ -82,6 +82,5 @@ export class Product {
     )
     colorsets: Colorset[];
 
-    //Imagen del producto
     image: string
 }

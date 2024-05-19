@@ -15,6 +15,7 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/Jwt.payload';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { Product } from 'src/products/entities/product.entity';
+import { ProductsService } from 'src/products/products.service';
 
 
 @Injectable()
@@ -27,6 +28,7 @@ export class AuthService {
     private readonly productRepository: Repository<Product>,
 
     private readonly jwtService: JwtService,
+    private readonly productService: ProductsService,
   ) {}
 
   private handleExceptions(error: any) {
@@ -186,6 +188,11 @@ export class AuthService {
       ) {
         return [];
       }
+
+      favorites.products.forEach(product => {
+        product.image = this.productService.convertToBase64(product.id); // Asigna el valor deseado a product.image
+        // Puedes modificar otros atributos aquí de manera similar
+      });
 
       return favorites.products;
     } catch (error) {

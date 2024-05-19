@@ -13,6 +13,7 @@ import { User } from 'src/auth/entities/auth.entity';
 import { Product } from 'src/products/entities/product.entity';
 import { Format } from 'src/formats/entities/format.entity';
 import { Colorset } from 'src/colorsets/entities/colorset.entity';
+import { ProductsService } from 'src/products/products.service';
 
 @Injectable()
 export class CartService {
@@ -27,6 +28,8 @@ export class CartService {
     private formatRepository: Repository<Format>,
     @InjectRepository(Colorset)
     private colorsetRepository: Repository<Colorset>,
+
+    private readonly productService: ProductsService,
   ) {}
 
   private handleExceptions(error: any) {
@@ -141,6 +144,12 @@ export class CartService {
     if (!carts) {
       throw new NotFoundException(`No items found`);
     }
+
+    carts.forEach(cart => {
+      if (cart.product) {
+        cart.product.image = this.productService.convertToBase64(cart.product.id);
+      }
+    });
 
     return carts;
   }

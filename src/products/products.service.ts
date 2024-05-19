@@ -98,8 +98,20 @@ export class ProductsService {
     if(!products){
       throw new NotFoundException(`No items found`);
     }
-
+    for (const product of products) {
+      try {
+        product.image = this.convertToBase64(product.id);
+      } catch (error) {
+        // Manejo de error si la imagen no se encuentra
+        console.warn(`Image for product with id ${product.id} not found`);
+        product.image = null; // o un valor predeterminado
+      }
+    }
     return products;
+  }
+
+  public convertToBase64(id: string): string {
+    return Buffer.from(`${id}.jpg`).toString('base64');
   }
 
   async findOne(id: string) {
@@ -107,7 +119,8 @@ export class ProductsService {
       where: {id: id},
       relations: ['categories', 'formats', 'colorsets']
     });
-    
+
+    product.image = this.convertToBase64(id);
     if(!product){
       throw new NotFoundException(`Product with id ${id} not found`);
     }
@@ -170,6 +183,16 @@ export class ProductsService {
     if(!products || products.length === 0){
       throw new NotFoundException(`No items found`);
     }
+    
+    for (const product of products) {
+      try {
+        product.image = this.convertToBase64(product.id);
+      } catch (error) {
+        // Manejo de error si la imagen no se encuentra
+        console.warn(`Image for product with id ${product.id} not found`);
+        product.image = null; // o un valor predeterminado
+      }
+    }
 
     return products;
   }
@@ -183,6 +206,16 @@ export class ProductsService {
 
     if(!products || products.length === 0){
       throw new NotFoundException(`No items found`);
+    }
+
+    for (const product of products) {
+      try {
+        product.image = this.convertToBase64(product.id);
+      } catch (error) {
+        // Manejo de error si la imagen no se encuentra
+        console.warn(`Image for product with id ${product.id} not found`);
+        product.image = null; // o un valor predeterminado
+      }
     }
 
     return products;
@@ -199,6 +232,17 @@ export class ProductsService {
       throw new NotFoundException(`No items found`);
     }
 
+    for (const product of products) {
+      try {
+        product.image = this.convertToBase64(product.id);
+      } catch (error) {
+        // Manejo de error si la imagen no se encuentra
+        console.warn(`Image for product with id ${product.id} not found`);
+        product.image = null; // o un valor predeterminado
+      }
+    }
+
     return products;
   }
+
 }
