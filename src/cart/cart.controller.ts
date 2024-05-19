@@ -1,10 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
+import { User } from 'src/auth/entities/auth.entity';
+import { getUser } from 'src/auth/decorators/getuser.decorator';
 
 @ApiTags('Cart')
 @Controller('cart')
@@ -13,10 +24,23 @@ export class CartController {
 
   @Post()
   @ApiBearerAuth('User JWT Authentication')
-  @ApiOperation({ summary: 'Crear un carrito de compra. Requiere estar autenticado' })
+  @ApiOperation({
+    summary: 'Inserta un producto al carrito de compra del usuario',
+  })
   @UseGuards(AuthGuard())
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  create(@getUser() user: User, @Body() createCartDto: CreateCartDto) {
+    return this.cartService.create(createCartDto, user);
+  }
+
+  @Get('userCart')
+  @ApiBearerAuth('User JWT Authentication')
+  @ApiOperation({
+    summary:
+      'Obtener todos los productos del carrito de compra del usuario. Requiere estar autenticado',
+  })
+  @UseGuards(AuthGuard())
+  findUserCart(@getUser() user: User) {
+    return this.cartService.findUserProductCart(user);
   }
 
   @Get()
