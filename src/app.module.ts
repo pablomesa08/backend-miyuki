@@ -13,6 +13,13 @@ import { PromotionModule } from './promotion/promotion.module';
 
 @Module({
   imports: [
+    ProductsModule,
+    AuthModule,
+    CategoriesModule,
+    CartModule,
+    FormatsModule,
+    ColorsetsModule,
+    PromotionModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
