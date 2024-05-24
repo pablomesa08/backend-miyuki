@@ -3,14 +3,27 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductsModule } from './products/products.module';
+import { AuthModule } from './auth/auth.module';
+import { CategoriesModule } from './categories/categories.module';
+import { CartModule } from './cart/cart.module';
+import { FormatsModule } from './formats/formats.module';
+import { ColorsetsModule } from './colorsets/colorsets.module';
+import { PromotionModule } from './promotion/promotion.module';
 
 @Module({
   imports: [
+    ProductsModule,
+    AuthModule,
+    CategoriesModule,
+    CartModule,
+    FormatsModule,
+    ColorsetsModule,
+    PromotionModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
       useFactory: () => {
         const isDatabaseUrlAvailable = !!process.env.DATABASE_URL;
-        const isSynchronize = process.env.synchronize === 'true'; // for production, set synchronize to false
         return {
           url: process.env.DATABASE_URL,
           type: 'postgres',
@@ -25,7 +38,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             ? { rejectUnauthorized: false }
             : undefined,
           entities: ['dist/**/*.entity{.ts,.js}'],
-          synchronize: isSynchronize,
+          synchronize: true, // Be cautious with this in production
           autoLoadEntities: true,
         };
       },
