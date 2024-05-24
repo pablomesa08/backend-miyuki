@@ -3,33 +3,34 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductsModule } from './products/products.module';
+import { AuthModule } from './auth/auth.module';
+import { CategoriesModule } from './categories/categories.module';
+import { CartModule } from './cart/cart.module';
+import { FormatsModule } from './formats/formats.module';
+import { ColorsetsModule } from './colorsets/colorsets.module';
+import { PromotionModule } from './promotion/promotion.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRootAsync({
-      useFactory: () => {
-        const isDatabaseUrlAvailable = !!process.env.DATABASE_URL;
-        const isSynchronize = process.env.synchronize === 'true'; // for production, set synchronize to false
-        return {
-          url: process.env.DATABASE_URL,
-          type: 'postgres',
-          host: !isDatabaseUrlAvailable ? process.env.DB_HOST : undefined,
-          port: !isDatabaseUrlAvailable ? +process.env.DB_PORT : undefined,
-          username: !isDatabaseUrlAvailable ? process.env.DB_USER : undefined,
-          password: !isDatabaseUrlAvailable
-            ? process.env.DB_PASSWORD
-            : undefined,
-          database: !isDatabaseUrlAvailable ? process.env.DB_NAME : undefined,
-          ssl: isDatabaseUrlAvailable
-            ? { rejectUnauthorized: false }
-            : undefined,
-          entities: ['dist/**/*.entity{.ts,.js}'],
-          synchronize: isSynchronize,
-          autoLoadEntities: true,
-        };
-      },
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      database: process.env.DB_NAME,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      autoLoadEntities: true,
+      synchronize: true,
     }),
+    ProductsModule,
+    AuthModule,
+    CategoriesModule,
+    CartModule,
+    FormatsModule,
+    ColorsetsModule,
+    PromotionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,6 +8,7 @@ import { User } from './entities/auth.entity';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { Category } from 'src/categories/entities/category.entity';
 import { ProductsModule } from 'src/products/products.module';
+import { OrdenesModule } from 'src/ordenes/ordenes.module';
 
 
 @Module({

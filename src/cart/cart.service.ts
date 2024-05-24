@@ -177,4 +177,17 @@ export class CartService {
     await this.cartRepository.remove(addedproduct);
     return(`Product successfully removed`)
   }
+
+  async obtainCart(user: User) {
+    const carts = await this.cartRepository.find({
+      where: { user: user },
+      relations: ['product', 'format', 'colorset'],
+    });
+
+    if (!carts) {
+      throw new NotFoundException(`No items found`);
+    }
+    const cartsJson = JSON.stringify(carts);
+    return cartsJson;
+  }
 }

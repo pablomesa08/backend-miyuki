@@ -18,5 +18,6 @@ import { ColorsetsModule } from 'src/colorsets/colorsets.module';
     FormatsModule,
     ColorsetsModule,
   ],
+  exports: [TypeOrmModule, CartService]
 })
 export class CartModule {}

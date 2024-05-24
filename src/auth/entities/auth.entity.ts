@@ -1,4 +1,5 @@
 import { Cart } from 'src/cart/entities/cart.entity';
+import { Ordenes } from 'src/ordenes/entities/ordenes.entity';
 import { Product } from 'src/products/entities/product.entity';
 import {
   BeforeInsert,
@@ -83,4 +84,7 @@ export class User {
 
   @OneToMany(() => Cart, (cart) => cart.user)
   carts: Cart[];
+
+  @OneToMany(() => Ordenes, (ordenes) => ordenes.cliente)
+  ordenes: Ordenes[];
 }
