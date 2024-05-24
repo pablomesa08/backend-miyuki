@@ -10,6 +10,7 @@ import { CartModule } from './cart/cart.module';
 import { FormatsModule } from './formats/formats.module';
 import { ColorsetsModule } from './colorsets/colorsets.module';
 import { PromotionModule } from './promotion/promotion.module';
+import { OrdenesModule } from './ordenes/ordenes.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { PromotionModule } from './promotion/promotion.module';
     FormatsModule,
     ColorsetsModule,
     PromotionModule,
+    OrdenesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
