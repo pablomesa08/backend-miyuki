@@ -39,6 +39,7 @@ export class OrdenesService {
     );
   }
 
+  //Metodo para crear una orden
   async create(createOrdenesDto: CreateOrdenesDto, user: User) {
     try {
       const order = await this.cartService.obtainCart(user);
@@ -46,38 +47,42 @@ export class OrdenesService {
         cliente: user,
         orden: order,
       });
-
-      if (createOrdenesDto.promotion) {
-        const promotion = await this.promotionRepository.findOne({
-          where: { id: createOrdenesDto.promotion },
-        });
-        if (!promotion) {
-          throw new NotFoundException(
-            `Promotion with id ${createOrdenesDto.promotion} not found`,
-          );
+  
+      await this.orderRepository.manager.transaction(async transactionalEntityManager => {
+        if (createOrdenesDto.promotion) {
+          const promotion = await transactionalEntityManager.findOne(Promotion, {
+            where: { id: createOrdenesDto.promotion },
+          });
+          if (!promotion) {
+            throw new NotFoundException(
+              `Promotion with id ${createOrdenesDto.promotion} not found`,
+            );
+          }
+          if (promotion.isAvailable === false) {
+            throw new BadRequestException(
+              `Promotion with id ${createOrdenesDto.promotion} is not available`,
+            );
+          }
+          console.log('Promotion: ', promotion);
+          orderEntity.promotion = promotion;
+          promotion.isAvailable = false;
+          await transactionalEntityManager.save(promotion);
+          orderEntity.promotion = promotion;
+          await transactionalEntityManager.save(orderEntity);
+        } else {
+          //Save order
+          await transactionalEntityManager.save(orderEntity);
         }
-        if (promotion.isAvailable === false) {
-          throw new BadRequestException(
-            `Promotion with id ${createOrdenesDto.promotion} is not available`,
-          );
-        }
-        console.log('Promotion: ', promotion);
-        orderEntity.promotion = promotion;
-        promotion.isAvailable = false;
-        await this.promotionRepository.save(promotion);
-        orderEntity.promotion = promotion;
-        await this.orderRepository.save(orderEntity);
-        return orderEntity;
-      }
-
-      //Save order
-      await this.orderRepository.save(orderEntity);
+  
+        //Clear cart
+        await this.cartService.clearCart(user);
+      });
+  
       return orderEntity;
     } catch (e) {
       this.handleExceptions(e);
     }
   }
-
   //Metodo para obtener todas las ordenes de la base de datos
   async findAll() {
     const orders = await this.orderRepository.find({

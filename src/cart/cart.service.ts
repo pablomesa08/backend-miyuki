@@ -190,4 +190,16 @@ export class CartService {
     const cartsJson = JSON.stringify(carts);
     return cartsJson;
   }
+
+  async clearCart(user: User) {
+    const cartItems = await this.cartRepository.find({ where: { user: user } });
+
+    if (!cartItems) {
+      throw new NotFoundException(`No items found in the cart`);
+    }
+
+    for (const item of cartItems) {
+      await this.cartRepository.remove(item);
+    }
+  }
 }
