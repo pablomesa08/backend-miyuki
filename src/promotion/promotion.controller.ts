@@ -25,10 +25,10 @@ export class PromotionController {
     return this.promotionService.findAll();
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Obtener una promoción por su id específico.' })
-  findOne(@Param('id') id: string) {
-    return this.promotionService.findOne(id);
+  @Get(':name')
+  @ApiOperation({ summary: 'Obtener una promoción por su nombre específico.' })
+  findOne(@Param('name') name: string) {
+    return this.promotionService.findOne(name);
   }
 
   @Patch(':id')

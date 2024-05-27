@@ -42,11 +42,11 @@ export class PromotionService {
     return promotions;
   }
 
-  async findOne(id: string) {
-    const promotion = await this.promotionRepository.findOneBy({id:id});
+  async findOne(name: string) {
+    const promotion = await this.promotionRepository.findOneBy({name:name});
     
     if(!promotion){
-      throw new NotFoundException(`Promotion with id ${id} not found`);
+      throw new NotFoundException(`Promotion with name ${name} not found`);
     }
 
     return promotion;

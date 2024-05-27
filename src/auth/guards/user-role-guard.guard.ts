@@ -10,7 +10,7 @@ export class UseRoleGuardGuard implements CanActivate {
     const validRoles=['admin'];
     const req=context.switchToHttp().getRequest();
     const user=req.user;
-    console.log(user.roles);
+    //console.log(user.roles);
     for(const rol of user.roles ){
         if(validRoles.includes(rol)) return true;
     }

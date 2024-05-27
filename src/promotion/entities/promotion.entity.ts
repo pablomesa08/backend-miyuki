@@ -14,6 +14,7 @@ export class Promotion {
     @BeforeInsert()
     checkName(){
         this.name = this.name.toLocaleLowerCase();
+        this.name = this.name.replace(/\s/g, '');
     }
 
     @Column({
